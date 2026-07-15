@@ -1,0 +1,241 @@
+/* ========================================
+   Header.module.css – SurkhetTimes Header
+   Traditional broadsheet newspaper style
+   ======================================== */
+
+.header {
+  --hdr-bg: #F7F5F0;
+  --hdr-text: #1a1a1a;
+  --hdr-river: #2C365E;
+  --hdr-accent: #D68C22;
+  --hdr-border: #1a1a1a;
+  --hdr-transition: 0.3s ease;
+  --hdr-max-width: 1200px;
+
+  background: var(--hdr-bg);
+  color: var(--hdr-text);
+  font-family: var(--font-mukta), sans-serif;
+}
+
+.topBar {
+  border-bottom: 1px solid var(--hdr-border);
+  padding: 8px 0;
+}
+
+.topBarInner {
+  max-width: var(--hdr-max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topNav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.topNavLink {
+  color: var(--hdr-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity var(--hdr-transition);
+}
+
+.topNavLink:hover {
+  opacity: 0.7;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1000;
+}
+
+.hamburgerLine {
+  width: 24px;
+  height: 2px;
+  background-color: var(--hdr-text);
+  transition: all var(--hdr-transition);
+}
+
+.masthead {
+  padding: 40px 24px 20px;
+  text-align: center;
+}
+
+.logo {
+  font-family: var(--font-martel), serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: var(--hdr-text);
+  text-decoration: none;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.riverMotif {
+  width: 100%;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.riverMotif svg {
+  width: 100%;
+  height: 100%;
+}
+
+.datelineBar {
+  border-top: 1px solid var(--hdr-border);
+  border-bottom: 1px solid var(--hdr-border);
+  margin: 12px 24px 24px;
+}
+
+.datelineBarInner {
+  max-width: var(--hdr-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.datelineLeft,
+.datelineRight {
+  flex: 1;
+}
+
+.datelineRight {
+  text-align: right;
+}
+
+.datelineCenter {
+  flex: 1;
+  text-align: center;
+}
+
+.audioLink {
+  color: var(--hdr-accent);
+  text-decoration: none;
+}
+
+.audioLink:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Nav */
+.mobileNav {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--hdr-bg);
+  border-left: 1px solid var(--hdr-border);
+  z-index: 999;
+  transform: translateX(100%);
+  transition: transform var(--hdr-transition);
+  padding: 64px 24px 24px;
+}
+
+.mobileNavOpen {
+  transform: translateX(0);
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobileNavLink, .mobileAudioLink {
+  color: var(--hdr-text);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.mobileAudioLink {
+  color: var(--hdr-accent);
+}
+
+.mobileNavDivider {
+  height: 1px;
+  background: var(--hdr-border);
+  margin: 8px 0;
+}
+
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--hdr-transition);
+}
+
+.mobileOverlayVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 900px) {
+  .logo {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .topNav {
+    display: none;
+  }
+
+  .topBarInner {
+    justify-content: flex-end;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobileNav {
+    display: block;
+  }
+
+  .mobileOverlay {
+    display: block;
+  }
+
+  .logo {
+    font-size: 2.5rem;
+  }
+
+  .datelineBarInner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .datelineLeft, .datelineCenter, .datelineRight {
+    text-align: center;
+    flex: auto;
+  }
+}

@@ -1,0 +1,104 @@
+/* ========================================
+   Footer.module.css – SurkhetTimes Footer
+   Traditional broadsheet newspaper colophon
+   ======================================== */
+
+.footer {
+  --ftr-bg: #F7F5F0;
+  --ftr-text: #1a1a1a;
+  --ftr-border: #1a1a1a;
+
+  background: var(--ftr-bg);
+  color: var(--ftr-text);
+  font-family: var(--font-mukta), sans-serif;
+  border-top: 1px solid var(--ftr-border);
+  padding: 48px 24px;
+}
+
+.footerInner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mastheadMark {
+  font-family: var(--font-martel), serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--ftr-border);
+  margin: 16px auto;
+  width: 100%;
+}
+
+.colophon {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--ftr-text);
+}
+
+.colophon a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.colophon a:hover {
+  text-decoration: underline;
+}
+
+.bottomSection {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.socialLinks, .legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.socialItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.socialLink, .legalLink {
+  color: var(--ftr-text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.socialLink:hover, .legalLink:hover {
+  text-decoration: underline;
+}
+
+.separator {
+  color: var(--ftr-text);
+  opacity: 0.6;
+}
+
+.copyright {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .colophon {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .mastheadMark {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,340 @@
+/* ============================================================
+   SurkhetTimes Design System — globals.css
+   Broadsheet Editorial Design
+   ============================================================ */
+
+:root {
+  /* ---- Color Palette ---- */
+  --bg-primary: #F7F5F0;
+  --text-primary: #111111;
+  --text-secondary: #444444;
+  --accent-1: #2C365E;
+  --accent-2: #D68C22;
+
+  /* ---- Typography — Font Family ---- */
+  --font-serif: var(--font-martel), 'Times New Roman', Times, serif;
+  --font-sans: var(--font-mukta), Arial, Helvetica, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* ---- Typography — Font Scale ---- */
+  --fs-xs:   clamp(0.694rem, 0.66vi + 0.53rem, 0.75rem);
+  --fs-sm:   clamp(0.8rem,   0.75vi + 0.6rem,  0.875rem);
+  --fs-base: clamp(0.875rem, 0.85vi + 0.65rem, 1rem);
+  --fs-md:   clamp(1rem,     1vi   + 0.75rem,  1.125rem);
+  --fs-lg:   clamp(1.125rem, 1.15vi + 0.85rem, 1.25rem);
+  --fs-xl:   clamp(1.25rem,  1.5vi + 0.9rem,   1.5rem);
+  --fs-2xl:  clamp(1.5rem,   2vi   + 1rem,     2rem);
+  --fs-3xl:  clamp(2rem,     3vi   + 1.2rem,   2.75rem);
+  --fs-4xl:  clamp(2.5rem,   4vi   + 1.4rem,   3.5rem);
+
+  /* ---- Typography — Line Heights ---- */
+  --lh-tight:   1.15;
+  --lh-snug:    1.3;
+  --lh-normal:  1.55;
+  --lh-relaxed: 1.7;
+
+  /* ---- Typography — Letter Spacing ---- */
+  --ls-tight:   -0.025em;
+  --ls-normal:   0;
+  --ls-wide:     0.025em;
+
+  /* ---- Typography — Font Weights ---- */
+  --fw-light:     300;
+  --fw-regular:   400;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-black:     900;
+
+  /* ---- Spacing Scale ---- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-7:  2rem;
+  --space-8:  2.5rem;
+  --space-9:  3rem;
+  --space-10: 4rem;
+  --space-11: 5rem;
+  --space-12: 6rem;
+
+  /* ---- Layout — Container Max-Widths ---- */
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1200px;
+  --container-2xl: 1400px;
+
+  /* ---- Z-Index Scale ---- */
+  --z-dropdown:   100;
+  --z-sticky:     200;
+  --z-overlay:    300;
+  --z-modal:      400;
+  --z-toast:      500;
+  --z-tooltip:    600;
+}
+
+/* ============================================================
+   CSS RESET & BASE STYLES
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0; /* Ensures sharp corners universally */
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-normal);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* ---- Selection ---- */
+::selection {
+  background-color: var(--accent-1);
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: var(--accent-1);
+  color: #fff;
+}
+
+/* ---- Focus Styles ---- */
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-primary);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-primary);
+}
+
+/* ============================================================
+   ELEMENT BASE STYLES
+   ============================================================ */
+
+/* ---- Headings ---- */
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-3xl); font-weight: var(--fw-black); }
+h2 { font-size: var(--fs-2xl); font-weight: var(--fw-bold); }
+h3 { font-size: var(--fs-xl);  font-weight: var(--fw-bold); }
+h4 { font-size: var(--fs-lg);  font-weight: var(--fw-bold); }
+h5 { font-size: var(--fs-md);  font-weight: var(--fw-bold); }
+h6 { font-size: var(--fs-base); font-weight: var(--fw-bold); }
+
+/* ---- Paragraphs ---- */
+p {
+  line-height: var(--lh-relaxed);
+  color: var(--text-primary);
+  text-wrap: pretty;
+}
+
+/* ---- Links ---- */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+
+a:hover {
+  color: var(--accent-2);
+}
+
+/* ---- Images & Media ---- */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- Lists ---- */
+ul, ol {
+  list-style: none;
+}
+
+/* ---- Tables ---- */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+/* ---- Forms ---- */
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ---- Misc ---- */
+hr {
+  border: none;
+  border-top: 1px solid #d4d0c5;
+  margin-block: var(--space-6);
+}
+
+blockquote {
+  border-left: 4px solid var(--accent-1);
+  padding-left: var(--space-4);
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--text-secondary);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+code {
+  padding: 0.15em 0.35em;
+}
+
+pre {
+  border: 1px solid #d4d0c5;
+  padding: var(--space-4);
+  overflow-x: auto;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.hairline {
+  border-bottom: 1px solid #d4d0c5;
+}
+
+/* ---- Container ---- */
+.container {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container { padding-inline: var(--space-6); }
+}
+
+@media (min-width: 1024px) {
+  .container { padding-inline: var(--space-7); }
+}
+
+@media (min-width: 1400px) {
+  .container { max-width: var(--container-2xl); }
+}
+
+/* ---- Screen-reader only ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---- Skip to content link ---- */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: var(--space-4);
+  z-index: var(--z-tooltip);
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-1);
+  color: #F7F5F0;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  transition: top 150ms ease-out;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

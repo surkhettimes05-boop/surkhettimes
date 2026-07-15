@@ -1,0 +1,375 @@
+/* ===========================
+   Home Page Styles
+   =========================== */
+
+/* --- Breaking News Ticker --- */
+.ticker {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  overflow: hidden;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+}
+
+.tickerLabel {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-4);
+  background: indigo;
+  color: white;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+
+.tickerTrack {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tickerText {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollTicker 30s linear infinite;
+  color: #111;
+  font-size: var(--fs-sm);
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+@keyframes scrollTicker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* --- Page --- */
+.page {
+  animation: fadeIn 0.4s ease-out;
+  background-color: #fcfbf9; /* newspaper-like off-white */
+}
+
+/* --- Front Page Layout --- */
+.frontPageSection {
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid #111;
+}
+
+.frontPageInner {
+  display: grid;
+  grid-template-columns: 65% 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Lead Story */
+.leadStory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.leadImageWrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid #111;
+}
+
+.leadImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.leadContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.leadHeadline {
+  font-family: 'Merriweather', 'Georgia', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #111;
+}
+
+.leadHeadline a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.leadHeadline a:hover {
+  text-decoration: underline;
+}
+
+.leadMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.leadByline {
+  color: #e28743; /* marigold */
+}
+
+.metaDivider {
+  color: #aaa;
+}
+
+.leadDate {
+  color: #555;
+}
+
+.leadAiBadge {
+  background: #eee;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #333;
+}
+
+.leadExcerpt {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #333;
+  font-family: 'Merriweather', 'Georgia', serif;
+}
+
+/* Secondary Stories */
+.secondaryStories {
+  display: flex;
+  flex-direction: column;
+}
+
+.secondaryArticle {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid #d4d0c5;
+}
+
+.secondaryArticle:first-child {
+  padding-top: 0;
+}
+
+.secondaryArticle:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.secondaryCategory {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: var(--space-2);
+  display: block;
+  letter-spacing: 0.05em;
+  font-family: sans-serif;
+}
+
+.secondaryHeadline {
+  font-family: 'Merriweather', 'Georgia', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: var(--space-2);
+  color: #111;
+}
+
+.secondaryHeadline a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.secondaryHeadline a:hover {
+  text-decoration: underline;
+}
+
+.secondaryExcerpt {
+  font-size: var(--fs-sm);
+  color: #444;
+  line-height: 1.5;
+  font-family: 'Merriweather', 'Georgia', serif;
+}
+
+/* --- Editorial Audio Brief CTA --- */
+.editorialAudioSection {
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid #d4d0c5;
+  background: #fff;
+  margin: var(--space-6) 0;
+}
+
+.editorialAudioInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.editorialAudioContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.editorialAudioTitle {
+  font-family: 'Merriweather', 'Georgia', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.editorialAudioDesc {
+  font-size: var(--fs-sm);
+  color: #555;
+  font-family: sans-serif;
+}
+
+.editorialAudioChannels {
+  display: flex;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.editorialChannelBtn {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid #111;
+  background: transparent;
+  color: #111;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.editorialChannelBtn:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* --- Section Styles (Utilities) --- */
+.utilitiesSection {
+  padding: var(--space-8) 0;
+  background: #fff;
+  border-top: 1px solid #d4d0c5;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-family: 'Merriweather', 'Georgia', serif;
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: #111;
+  white-space: nowrap;
+}
+
+.sectionLine {
+  flex: 1;
+  height: 1px;
+  background: #d4d0c5;
+}
+
+/* --- Utilities Grid --- */
+.utilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.utilityCard {
+  padding: var(--space-6);
+  background: #f9f9f9;
+  border: 1px solid #d4d0c5;
+  border-radius: 0;
+  text-align: center;
+  text-decoration: none;
+  color: #111;
+  transition: all 0.2s;
+}
+
+.utilityCard:hover {
+  border-color: #111;
+  background: #fff;
+}
+
+.utilityIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.utilityCard h3 {
+  font-family: sans-serif;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.utilityCard p {
+  font-size: var(--fs-sm);
+  color: #555;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .frontPageInner {
+    grid-template-columns: 1fr;
+  }
+  
+  .leadHeadline {
+    font-size: 2.5rem;
+  }
+
+  .utilitiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .editorialAudioInner {
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .editorialAudioChannels {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .leadHeadline {
+    font-size: 2rem;
+  }
+
+  .utilitiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorialAudioChannels {
+    flex-direction: column;
+  }
+
+  .editorialChannelBtn {
+    text-align: center;
+  }
+}

@@ -1,0 +1,153 @@
+/* FactsToggle - Tab Toggle Styles */
+
+.container {
+  width: 100%;
+}
+
+/* Tab Bar */
+.tabBar {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-family: var(--font-mukta), sans-serif;
+  font-weight: 600;
+  color: #555;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.tab:hover {
+  color: #000;
+}
+
+.tabActive {
+  color: #2C365E;
+}
+
+.tabActive::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #2C365E;
+}
+
+/* Facts List */
+.factsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.factItem {
+  position: relative;
+  padding-left: 20px;
+  font-family: var(--font-martel), serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.factItem::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #2C365E;
+  font-size: 1.2rem;
+}
+
+/* Full Story */
+.fullStory {
+  font-size: 1.05rem;
+  font-family: var(--font-martel), serif;
+  line-height: 1.7;
+  color: #000;
+}
+
+.fullStory p {
+  margin-bottom: 16px;
+}
+
+.fullStory h2,
+.fullStory h3,
+.fullStory h4 {
+  font-family: var(--font-mukta), sans-serif;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.fullStory a {
+  color: #2C365E;
+  text-decoration: underline;
+}
+
+.fullStory img {
+  max-width: 100%;
+  margin: 16px 0;
+}
+
+.fullStory blockquote {
+  border-left: 2px solid #000;
+  padding-left: 20px;
+  margin: 24px 0;
+  font-style: italic;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .tabBar {
+    border-bottom-color: #444;
+  }
+
+  .tab {
+    color: #aaa;
+  }
+
+  .tab:hover {
+    color: #fff;
+  }
+
+  .tabActive {
+    color: #8da1ed;
+  }
+
+  .tabActive::after {
+    background: #8da1ed;
+  }
+
+  .factItem {
+    color: #ddd;
+  }
+
+  .factItem::before {
+    color: #8da1ed;
+  }
+
+  .fullStory {
+    color: #ddd;
+  }
+
+  .fullStory a {
+    color: #8da1ed;
+  }
+
+  .fullStory blockquote {
+    border-left-color: #fff;
+  }
+}

@@ -1,0 +1,71 @@
+/* AudioVideoPlayer Styles */
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Video Player */
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border: 1px solid #000;
+}
+
+.video {
+  width: 100%;
+  display: block;
+  outline: none;
+}
+
+/* Audio Player */
+.audioWrapper {
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #000;
+  background: #fff;
+}
+
+.audioTitle {
+  font-family: var(--font-martel), serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 12px;
+}
+
+.audio {
+  width: 100%;
+  height: 40px;
+  outline: none;
+}
+
+/* Custom audio styling for webkit browsers */
+.audio::-webkit-media-controls-panel {
+  background: #f0f0f0;
+  border-radius: 0;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .videoWrapper,
+  .audioWrapper {
+    border-color: #fff;
+  }
+
+  .audioWrapper {
+    background: transparent;
+  }
+
+  .audioTitle {
+    color: #fff;
+  }
+
+  .audio::-webkit-media-controls-panel {
+    background: #222;
+  }
+}
