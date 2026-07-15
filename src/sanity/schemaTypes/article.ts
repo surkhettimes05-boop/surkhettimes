@@ -60,8 +60,8 @@ export const article = defineType({
     defineField({
       name: 'fullStory',
       title: 'Full Story',
-      type: 'array',
-      of: [{ type: 'block' }],
+      type: 'text',
+      rows: 10,
     }),
     defineField({
       name: 'hasAudio',
