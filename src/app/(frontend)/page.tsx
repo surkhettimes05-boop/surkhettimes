@@ -34,10 +34,7 @@ export default async function HomePage() {
         <span className={styles.tickerLabel}>ताजा</span>
         <div className={styles.tickerTrack}>
           <p className={styles.tickerText}>
-            कर्णाली प्रदेश सरकारले नयाँ कृषि विकास योजना सार्वजनिक गर्यो •
-            सुर्खेत विमानस्थलको विस्तार कार्य तीव्र पारिँदै •
-            कर्णाली प्रीमियर लिग: सुर्खेत वारियर्सको शानदार जित •
-            राष्ट्रिय बजेटले कर्णालीलाई कति दिन्छ? विश्लेषण
+            {articles.slice(0, 5).map((a: any) => a.title).join(" • ")}
           </p>
         </div>
       </div>
