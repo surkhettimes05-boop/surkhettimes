@@ -9,7 +9,7 @@ export interface FactsToggleProps {
   /** Array of fact strings displayed as a bulleted list */
   facts: string[];
   /** Full story content as Sanity block array */
-  fullStory: any;
+  fullStory: unknown;
 }
 
 type Tab = 'facts' | 'story';

@@ -34,7 +34,7 @@ export default async function HomePage() {
         <span className={styles.tickerLabel}>ताजा</span>
         <div className={styles.tickerTrack}>
           <p className={styles.tickerText}>
-            {articles.slice(0, 5).map((a: any) => a.title).join(" • ")}
+            {articles.slice(0, 5).map((a: { title: string }) => a.title).join(" • ")}
           </p>
         </div>
       </div>

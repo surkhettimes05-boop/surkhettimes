@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { bulletPoints, category, source } = body;
+    const { bulletPoints, category } = body;
 
     // 2. Validate Input
     if (!bulletPoints || typeof bulletPoints !== 'string' || bulletPoints.trim().length < 20) {
@@ -87,7 +87,7 @@ Respond ONLY with the JSON object, no markdown blocks, no other text.`;
     try {
       parsedArticle = JSON.parse(generatedText);
     } catch (e) {
-      console.error('Failed to parse Gemini JSON:', generatedText);
+      console.error('Failed to parse NVIDIA JSON:', generatedText);
       return NextResponse.json({ error: 'AI returned invalid JSON format.' }, { status: 502 });
     }
 
@@ -143,8 +143,9 @@ Respond ONLY with the JSON object, no markdown blocks, no other text.`;
       studioUrl: `/studio/structure/article;${createdDraft._id}`
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Agent Submit Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: 'Internal Server Error', details: msg }, { status: 500 });
   }
 }

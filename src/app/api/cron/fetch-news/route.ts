@@ -65,8 +65,8 @@ export async function GET(request: Request) {
       message: `Cron job executed successfully. Published ${addedCount} new articles.` 
     }, { status: 200 });
 
-  } catch (error: any) {
-    console.error('Cron Error:', error);
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
