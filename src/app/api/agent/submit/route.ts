@@ -28,10 +28,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3. Call Gemini API
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (!geminiKey) {
-      console.error('Missing GEMINI_API_KEY');
+    // 3. Call NVIDIA NIM API
+    const nvidiaKey = process.env.NVIDIA_API_KEY;
+    if (!nvidiaKey) {
+      console.error('Missing NVIDIA_API_KEY');
       return NextResponse.json({ error: 'Server configuration error.' }, { status: 500 });
     }
 
@@ -41,7 +41,7 @@ STRICT RULES:
 1. ONLY use the facts provided in the bullet points. Do NOT invent, hallucinate, or add any numbers, quotes, names, or events not present in the input.
 2. If the bullet points are brief, write a short news brief. Do NOT pad with fluff.
 3. Write in standard Nepali broadsheet style (formal journalistic tone).
-4. Structure the body with a short lede paragraph followed by body paragraphs. Use \`\\n\\n\` for paragraph breaks.
+4. Structure the body with a short lede paragraph followed by body paragraphs. Use \\n\\n for paragraph breaks.
 5. You MUST output a valid JSON object matching this schema exactly:
 {
   "headline": "A strong Nepali headline",
@@ -50,33 +50,33 @@ STRICT RULES:
 }
 Respond ONLY with the JSON object, no markdown blocks, no other text.`;
 
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+    const nvidiaResponse = await fetch(
+      'https://integrate.api.nvidia.com/v1/chat/completions',
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${nvidiaKey}`
+        },
         body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }]
-          },
-          contents: [{
-            parts: [{ text: `Raw Bullet Points:\n${bulletPoints}` }]
-          }],
-          generationConfig: {
-            response_mime_type: "application/json",
-          }
+          model: 'meta/llama-3.1-70b-instruct',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `Raw Bullet Points:\n${bulletPoints}` }
+          ],
+          response_format: { type: 'json_object' }
         }),
       }
     );
 
-    if (!geminiResponse.ok) {
-      const err = await geminiResponse.text();
-      console.error('Gemini API Error:', err);
+    if (!nvidiaResponse.ok) {
+      const err = await nvidiaResponse.text();
+      console.error('NVIDIA API Error:', err);
       return NextResponse.json({ error: 'Failed to generate article with AI.' }, { status: 502 });
     }
 
-    const geminiData = await geminiResponse.json();
-    const generatedText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+    const nvidiaData = await nvidiaResponse.json();
+    const generatedText = nvidiaData.choices?.[0]?.message?.content;
     
     if (!generatedText) {
       return NextResponse.json({ error: 'AI returned an empty response.' }, { status: 502 });
