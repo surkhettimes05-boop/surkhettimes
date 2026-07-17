@@ -1,18 +1,22 @@
 import styles from "./page.module.css";
 import { client } from "@/sanity/client";
-import { articlesQuery } from "@/sanity/queries";
+import { articlesQuery, advertisementsQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import Advertisement from "@/components/Advertisement/Advertisement";
 
 export const revalidate = 60; // revalidate every 60 seconds
 
 export default async function HomePage() {
   let articles: any[] = [];
+  let ads: any[] = [];
   try {
     articles = await client.fetch(articlesQuery);
+    ads = await client.fetch(advertisementsQuery);
   } catch (error) {
-    console.warn("Could not fetch Sanity articles for HomePage. Falling back to empty array.");
+    console.warn("Could not fetch Sanity data for HomePage.");
   }
   const heroArticle = articles[0] || null;
+  const homeAd = ads[0] || null;
 
   if (!heroArticle) {
     return (
@@ -87,6 +91,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Leaderboard Ad Slot */}
+      <div className="container">
+        <Advertisement ad={homeAd} />
+      </div>
 
       {/* Editorial Audio Brief CTA */}
       <section className={styles.editorialAudioSection}>

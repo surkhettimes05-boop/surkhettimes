@@ -75,7 +75,7 @@ export default function FactsToggle({ facts, fullStory }: FactsToggleProps) {
             {typeof fullStory === 'string' ? (
               <div dangerouslySetInnerHTML={{ __html: fullStory }} />
             ) : (
-              <PortableText value={fullStory} />
+              <PortableText value={fullStory as any} />
             )}
           </div>
         </div>

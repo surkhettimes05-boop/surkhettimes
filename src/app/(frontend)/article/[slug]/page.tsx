@@ -5,8 +5,9 @@ import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import styles from "./page.module.css";
 import type { Metadata } from "next";
 import { client } from "@/sanity/client";
-import { articleBySlugQuery, articleSlugsQuery, articlesQuery } from "@/sanity/queries";
+import { articleBySlugQuery, articleSlugsQuery, articlesQuery, advertisementsQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import Advertisement from "@/components/Advertisement/Advertisement";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -56,12 +57,43 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const allArticles = await client.fetch(articlesQuery);
+  const ads = await client.fetch(advertisementsQuery);
+  const articleAd = ads[0] || null;
+
   const relatedArticles = allArticles.filter(
     (a: any) => a._id !== article._id
   ).slice(0, 3);
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://surkhettimes.com';
+  
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "image": article.coverImage ? [urlFor(article.coverImage).width(1200).height(800).url()] : [],
+    "datePublished": article.date,
+    "dateModified": article.date,
+    "author": [{
+      "@type": "Person",
+      "name": article.author || 'SurkhetTimes Desk',
+      "url": baseUrl
+    }],
+    "publisher": {
+      "@type": "NewsMediaOrganization",
+      "name": "SurkhetTimes",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${baseUrl}/favicon.ico`
+      }
+    }
+  };
+
   return (
     <div className={styles.articlePage}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className={`container ${styles.articleLayout}`}>
         {/* Main Content */}
         <article className={styles.articleMain}>
@@ -141,6 +173,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
         {/* Sidebar */}
         <aside className={styles.sidebar}>
+          {/* Article Sidebar Ad Slot */}
+          <Advertisement ad={articleAd} />
+
           <div className={styles.sidebarSection}>
             <h3 className={styles.sidebarHeading}>सम्बन्धित समाचार</h3>
             <div className={styles.relatedList}>
