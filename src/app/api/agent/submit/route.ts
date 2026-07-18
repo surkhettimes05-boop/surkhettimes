@@ -44,7 +44,8 @@ STRICT RULES:
 4. Structure the body with a short lede paragraph followed by body paragraphs. Use \\n\\n for paragraph breaks.
 5. You MUST output a valid JSON object matching this schema exactly:
 {
-  "headline": "A strong Nepali headline",
+  "headline": "A strong, catchy Nepali headline (include location like Surkhet if relevant)",
+  "seoSummary": "A 1-2 sentence Nepali summary of the article for Google search results, including keywords like Surkhet News or Karnali.",
   "body": "The full article text...",
   "suggestedTags": ["tag1", "tag2"]
 }
@@ -128,6 +129,7 @@ Respond ONLY with the JSON object, no markdown blocks, no other text.`;
       },
       category: category || 'news', // Default fallback
       date: new Date().toISOString(),
+      summary: parsedArticle.seoSummary || '',
       fullStory: parsedArticle.body,
       rawInput: bulletPoints,
       sourceType: 'ai_draft',

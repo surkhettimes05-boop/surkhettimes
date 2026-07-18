@@ -15,7 +15,11 @@ const parser = new Parser();
 
 // Helper to generate a URL-safe slug from Nepali text
 function generateSlug(title: string) {
-  const safeString = title.trim().replace(/\s+/g, '-').substring(0, 80);
+  const safeString = title
+    .trim()
+    .replace(/[^a-zA-Z0-9\u0900-\u097F]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 80);
   const randomSuffix = Math.floor(Math.random() * 10000);
   return `${safeString}-${randomSuffix}`;
 }
@@ -49,9 +53,11 @@ export async function GET(request: Request) {
           category: 'news',
           author: item.creator || 'AutoBot',
           date: new Date(item.pubDate || Date.now()).toISOString(),
+          summary: item.contentSnippet?.substring(0, 150) + '...',
           fullStory: item.contentSnippet || item.content || item.summary || 'No content provided.',
           hasAudio: false,
           hasVideo: false,
+          suggestedTags: ["Surkhet News", "Karnali Province", "Nepal News"],
         };
 
         // 4. Publish to Sanity!
