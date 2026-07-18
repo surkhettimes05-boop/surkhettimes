@@ -82,6 +82,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ne" className={`${martel.variable} ${mukta.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NewsMediaOrganization",
+              "name": "SurkhetTimes",
+              "url": "https://surkhettimes.com",
+              "foundingLocation": {
+                "@type": "Place",
+                "name": "Surkhet, Karnali Province, Nepal"
+              },
+              "location": {
+                "@type": "Place",
+                "name": "Surkhet, Nepal"
+              },
+              "description": "SurkhetTimes delivers the latest news, stories, and updates from Surkhet, Karnali Province, and across Nepal."
+            })
+          }}
+        />
+      </head>
       <body>
         <a href="#main-content" className="skip-to-content">
           Skip to content
