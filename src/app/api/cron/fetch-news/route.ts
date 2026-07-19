@@ -66,9 +66,30 @@ export async function GET(request: Request) {
       }
     }
 
+    // 5. Cleanup Old Articles (Keep only newest 50)
+    let deletedCount = 0;
+    try {
+      // Fetch all article IDs ordered by date descending
+      const allArticles = await client.fetch(`*[_type == "article"] | order(date desc) { _id }`);
+      if (allArticles.length > 50) {
+        const articlesToDelete = allArticles.slice(50); // Get everything after the 50th item
+        
+        // Delete in a single transaction for efficiency
+        const transaction = client.transaction();
+        for (const doc of articlesToDelete) {
+          transaction.delete(doc._id);
+        }
+        await transaction.commit();
+        deletedCount = articlesToDelete.length;
+      }
+    } catch (cleanupError) {
+      console.error("Cleanup failed:", cleanupError);
+      // We don't want to fail the whole cron job just because cleanup failed
+    }
+
     return NextResponse.json({ 
       success: true, 
-      message: `Cron job executed successfully. Published ${addedCount} new articles.` 
+      message: `Cron job executed successfully. Published ${addedCount} new articles. Deleted ${deletedCount} old articles.` 
     }, { status: 200 });
 
   } catch (error: unknown) {
