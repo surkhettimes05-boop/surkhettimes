@@ -103,22 +103,3 @@
   font-style: italic;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .title {
-    color: #fff;
-  }
-
-  .summary {
-    color: #ccc;
-  }
-
-  .footer {
-    color: #aaa;
-  }
-
-  .imageWrapper,
-  .imagePlaceholder {
-    background: #222;
-  }
-}

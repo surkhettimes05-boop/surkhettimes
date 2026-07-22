@@ -50,22 +50,3 @@
   border-radius: 0;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .videoWrapper,
-  .audioWrapper {
-    border-color: #fff;
-  }
-
-  .audioWrapper {
-    background: transparent;
-  }
-
-  .audioTitle {
-    color: #fff;
-  }
-
-  .audio::-webkit-media-controls-panel {
-    background: #222;
-  }
-}

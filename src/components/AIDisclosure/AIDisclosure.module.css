@@ -32,14 +32,3 @@
   margin-right: 6px;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .badge {
-    color: #fff;
-  }
-
-  .banner {
-    border-color: #fff;
-    color: #fff;
-  }
-}
