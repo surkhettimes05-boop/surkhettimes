@@ -3,7 +3,7 @@ import { client } from '@/sanity/client';
 import { articleSlugsQuery } from '@/sanity/queries';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://surkhettimes.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://surkhettimes.vercel.app'));
 
   // Static routes
   const routes: MetadataRoute.Sitemap = [
@@ -70,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (slugs && slugs.length > 0) {
       const articleRoutes = slugs.map((item: any) => ({
         url: `${baseUrl}/article/${item.slug}`,
-        lastModified: new Date(), // Ideally we should fetch the _updatedAt from Sanity for exact precision
+        lastModified: new Date(item._updatedAt || new Date()), // Fetch the _updatedAt from Sanity for exact precision
         changeFrequency: 'daily' as const,
         priority: 0.7,
       }));

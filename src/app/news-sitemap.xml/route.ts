@@ -10,7 +10,7 @@ const newsArticlesQuery = `*[_type == "article" && defined(slug.current) && date
 }`;
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://surkhettimes.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://surkhettimes.vercel.app'));
   
   try {
     const articles = await client.fetch(newsArticlesQuery);

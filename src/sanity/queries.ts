@@ -1,9 +1,16 @@
-export const articlesQuery = `*[_type == "article"] | order(date desc) {
+export const articlesQuery = `*[_type == "article" && defined(date)] | order(date desc) {
   _id,
   title,
   "slug": slug.current,
   category,
   author,
+  authorProfile->{
+    name,
+    "slug": slug.current,
+    image,
+    bio,
+    twitter
+  },
   date,
   coverImage,
   facts,
@@ -21,6 +28,13 @@ export const articleBySlugQuery = `*[_type == "article" && slug.current == $slug
   "slug": slug.current,
   category,
   author,
+  authorProfile->{
+    name,
+    "slug": slug.current,
+    image,
+    bio,
+    twitter
+  },
   date,
   coverImage,
   facts,
@@ -32,7 +46,7 @@ export const articleBySlugQuery = `*[_type == "article" && slug.current == $slug
   videoUrl
 }`;
 
-export const articleSlugsQuery = `*[_type == "article" && defined(slug.current)][]{"slug": slug.current}`;
+export const articleSlugsQuery = `*[_type == "article" && defined(slug.current)][]{"slug": slug.current, "_updatedAt": _updatedAt}`;
 
 export const obituariesQuery = `*[_type == "obituary"] | order(date desc)`;
 export const jobsQuery = `*[_type == "job"] | order(date desc)`;

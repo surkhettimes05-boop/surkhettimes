@@ -6,22 +6,23 @@ const { createClient } = require('@sanity/client');
 const envPath = path.join(__dirname, '..', '.env.local');
 if (fs.existsSync(envPath)) {
   const envConfig = fs.readFileSync(envPath, 'utf8');
-  envConfig.split('\n').forEach((line) => {
+  envConfig.split(/\r?\n/).forEach((line) => {
     const trimmed = line.trim();
     if (trimmed && !trimmed.startsWith('#')) {
       const equalsIdx = trimmed.indexOf('=');
       if (equalsIdx !== -1) {
         const key = trimmed.substring(0, equalsIdx).trim();
-        const val = trimmed.substring(equalsIdx + 1).trim();
+        let val = trimmed.substring(equalsIdx + 1).trim();
+        val = val.replace(/^["']|["']$/g, '').trim();
         process.env[key] = val;
       }
     }
   });
 }
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '91ibblyw';
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
-const token = process.env.SANITY_WRITE_TOKEN;
+const projectId = (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '91ibblyw').trim();
+const dataset = (process.env.NEXT_PUBLIC_SANITY_DATASET || 'production').trim();
+const token = process.env.SANITY_WRITE_TOKEN ? process.env.SANITY_WRITE_TOKEN.trim() : null;
 
 if (!token) {
   console.error('ERROR: SANITY_WRITE_TOKEN is not set in environment or .env.local.');
@@ -53,79 +54,90 @@ async function uploadImage(seedString) {
 
 const newsStories = [
   {
+    category: 'politics',
+    title: 'Government Rolls Back 3% Equity Fee on Health and Education Services',
+    date: '2026-07-22',
+    author: 'SurkhetTimes Governance Desk',
+    facts: [
+      'Prime Minister Balendra Shah announced the rollback of the controversial 3% equity fee on private health and education services.',
+      'The tax was originally introduced in the recent budget and implemented on July 17, drawing intense public and political pushback.',
+      'A formal Cabinet decision will finalize the withdrawal following cross-party consultations and legal reviews.'
+    ],
+    fullStory: 'The Government of Nepal has officially announced the withdrawal of the proposed 3% equity fee levied on private health and education services. Prime Minister Balendra Shah shared the decision via social media, stating that the levy was cancelled to protect citizens from rising service costs while maintaining efforts to improve healthcare and education access for disadvantaged groups. Opposition leaders, including Nepali Congress General Secretary Gagan Thapa and Gen-Z movement leader Rabi Kiran Hamal, welcomed the decision, while legal advisors noted that a formal Cabinet decision will be promulgated to complete the statutory rollback.'
+  },
+  {
     category: 'business',
-    title: 'Nepal Enters Fiscal Year 2026/27 with Sweeping Income Tax Relief and Tariff Cuts',
+    title: 'Parliament Scrutinizes Integrated Tourism Bill with 263 Proposed Amendments',
+    date: '2026-07-22',
+    author: 'SurkhetTimes Business Desk',
     facts: [
-      'On July 17, 2026, Nepal officially entered Fiscal Year 2026/27 with major economic tax and policy changes taking effect.',
-      'The 1% entry-level income tax threshold was doubled to Rs 1 million, while the top personal income tax bracket was lowered from 39% to 29%.',
-      'Civil servants received a 21% salary increase, and customs duties were reduced across 273 industrial imported items to lower manufacturing costs.'
+      'Nepalese lawmakers have registered 263 amendments to the Integrated Tourism Bill currently under review in parliamentary committee.',
+      'Key proposed rules mandate prior experience on a 7,000m peak before attempting Mt. Everest and strict zero-waste regulations.',
+      'The landmark bill aims to modernize Himalayan mountaineering safety, regulate expedition agencies, and protect the fragile high-altitude environment.'
     ],
-    fullStory: 'Nepal officially inaugurated Fiscal Year 2026/27 on July 17, 2026, implementing a comprehensive set of tax revisions and fiscal reforms designed to stimulate economic growth and ease financial pressures on citizens. Key tax adjustments include doubling the entry-level 1% income tax threshold to Rs 1 million and reducing the maximum individual tax rate to 29%. Additionally, government employees saw a 21% salary increase, while customs duties were streamlined from 11 tiers to 7, bringing down import tariffs for over 270 industrial inputs.'
+    fullStory: 'Nepal\'s Parliament has commenced clause-by-clause evaluation of the Integrated Tourism Bill, with lawmakers registering 263 separate amendments aimed at reforming high-altitude mountaineering and tourism management. Among the flagship proposals is a requirement that climbers summit at least one 7,000-meter peak in Nepal before receiving permits to climb Mt. Everest (8,848m). Additionally, the bill proposes permit auctions, mandatory environmental waste removal (requiring climbers to carry down 8kg of solid waste), and enhanced insurance coverage for Nepalese high-altitude guides and support staff.'
   },
   {
     category: 'politics',
-    title: 'Government and Loan Shark Victims Agree on Establishing Special Usury Tribunal',
+    title: 'Nepali Congress Observes 44th BP Koirala Memorial Day Across Nepal',
+    date: '2026-07-22',
+    author: 'SurkhetTimes Political Desk',
     facts: [
-      'Government representatives and victims of predatory lending reached a historic agreement in Kathmandu on July 17, 2026.',
-      'The federal government officially agreed to classify usurious lending (meter byaj) as a serious economic crime.',
-      'A dedicated special tribunal will be established to nullify fraudulent land documents and enforce debt relief for affected borrowers.'
+      'Nepal commemorated the 44th Memorial Day of founding leader and former Prime Minister Bishweshwar Prasad Koirala.',
+      'Events included a climate awareness "Green Run" in Lalitpur and policy symposiums on democratic governance.',
+      'Party leaders reiterated BP Koirala\'s principles of social democracy and emphasized party unity and organizational reform.'
     ],
-    fullStory: 'In a major political breakthrough on July 17, 2026, high-level federal officials and representatives of victims of predatory lending reached a consensus to address long-standing usury issues in Nepal. Under the formal agreement, the government agreed to classify meter byaj as a severe economic crime and set up a dedicated judicial tribunal. The tribunal will be empowered to invalidate illegal financial contracts, void fraudulent property transfers, and provide legal restitution to vulnerable citizens across the provinces.'
+    fullStory: 'The Nepali Congress and democracy advocates across Nepal commemorated the 44th Memorial Day of BP Koirala, the founding leader of the Nepali Congress and Nepal\'s first democratically elected Prime Minister. Commemorative programs were held nationwide, anchored by a "Green Run" in Lalitpur organized to highlight youth participation in environmental sustainability and climate action. Party leaders reflected on BP Koirala\'s legacy of social democracy, national reconciliation, and constitutional government, calling for renewed commitment to democratic principles amidst modern political challenges.'
   },
   {
     category: 'news',
-    title: 'Central Zoo Reopens to Public Following Negative Avian Influenza Test Results',
+    title: '4.2 Magnitude Earthquake Strikes Bajhang District in Western Nepal',
+    date: '2026-07-22',
+    author: 'SurkhetTimes National Desk',
     facts: [
-      'Kathmandu\'s Central Zoo in Jawalakhel reopened its doors to visitors on July 17, 2026, after nearly a month of preventive closure.',
-      'The closure had been imposed on June 19 following suspected bird flu risks among resident avian species.',
-      'Comprehensive veterinary testing confirmed negative results for avian influenza, allowing safe public access to resume.'
+      'A magnitude 4.2 earthquake jolted Bajhang district at 4:40 AM today with its epicenter located near Kotdewal.',
+      'Tremors were registered across Bajhang, Baitadi, and surrounding hill districts in Sudurpashchim Province.',
+      'District security officials and local emergency responders confirmed no casualties or major structural damages occurred.'
     ],
-    fullStory: 'The Central Zoo in Jawalakhel, Lalitpur, officially reopened to visitors on July 17, 2026, after being closed since June 19 due to concerns over avian influenza (bird flu). Health authorities and veterinary officials confirmed that exhaustive diagnostic testing of all captive birds returned negative results, confirming the enclosure is safe. Zoo management announced updated biosecurity measures and welcomed back families and tourists to the popular wildlife site.'
+    fullStory: 'A moderate earthquake measuring 4.2 on the Richter scale struck Bajhang district in western Nepal early Wednesday morning at 4:40 AM local time. According to the National Seismological Centre, the epicenter was located near Kotdewal in Bajhang. The earthquake triggered mild tremors felt across Bajhang, Baitadi, and adjacent districts in Sudurpashchim Province. Local authorities and police checkpoints conducted preliminary assessments across the affected rural municipalities, confirming that no injuries or physical damages were reported.'
   },
   {
     category: 'news',
-    title: 'University Grants Commission Assumes Authority for Degree Equivalency Verification',
+    title: 'Tatopani Border Operations Suspended for Sixth Day Following Monsoon Landslides',
+    date: '2026-07-22',
+    author: 'SurkhetTimes Infrastructure Desk',
     facts: [
-      'Effective July 17, 2026, the University Grants Commission (UGC) took over full responsibility for issuing higher education degree equivalence certificates.',
-      'The mandate was previously managed by Tribhuvan University\'s Curriculum Development Centre.',
-      'The shift aims to centralize degree verification and eliminate lengthy administrative delays for students with foreign degrees.'
+      'Trade operations at the Tatopani border crossing with China remain halted for a sixth consecutive day due to road subsidence and landslides.',
+      'Approximately 150 cargo containers remain stranded on the Chinese side while dozens of freight vehicles wait in Nepal.',
+      'Traders and logistics associations have urged immediate road clearance and permanent slope stabilization along the highway.'
     ],
-    fullStory: 'Starting July 17, 2026, the University Grants Commission (UGC) officially became the sole authority responsible for evaluating and issuing degree equivalency certificates for higher education in Nepal. Shifting this function away from Tribhuvan University is part of a national higher education reform designed to centralize qualifications recognition and reduce administrative hurdles for Nepali students returning from study abroad.'
-  },
-  {
-    category: 'politics',
-    title: 'Nepal and India Resume Bilateral Talks on Additional Cross-Border Air Entry Routes',
-    facts: [
-      'Nepal and India reopened formal negotiations on July 17, 2026, regarding new air entry routes into Nepali airspace.',
-      'The requested western and eastern entry points are vital for international operations at Pokhara and Bhairahawa airports.',
-      'Opening new corridors will shorten international flight times, lower fuel expenses, and boost regional tourism.'
-    ],
-    fullStory: 'After a decade of stalled negotiations, aviation authorities from Nepal and India resumed formal bilateral talks on July 17, 2026, to discuss granting additional cross-border air entry routes to Nepal. Expanding entry points beyond the heavily congested Simara route is essential for making Pokhara International Airport and Gautam Buddha International Airport in Bhairahawa operationally viable and cost-effective for international commercial airlines.'
+    fullStory: 'Bilateral trade at the Tatopani border crossing, one of Nepal\'s key commercial gateways with China, remains severely disrupted for a sixth consecutive day following heavy monsoon rains that caused road subsidence and landslips. Around 150 container trucks carrying imported goods, including garments, electronics, and industrial raw materials, remain stranded on the Chinese side of the border near Zhangmu. Nepal\'s Department of Roads and local administrative authorities have deployed heavy machinery to clear debris and reconstruct sunken road segments to restore traffic safely.'
   }
 ];
 
 async function publishNews() {
-  console.log('Starting publication of 5 latest real news stories for Nepal (July 17, 2026)...');
+  console.log('Starting publication of top 5 latest real news stories for Nepal (July 22, 2026)...');
   const docsToCreate = [];
+  const timestamp = Date.now();
 
   for (let i = 0; i < newsStories.length; i++) {
     const story = newsStories[i];
     console.log(`[${i + 1}/5] Processing article: "${story.title}"...`);
     
-    const imageAssetId = await uploadImage(`nepal-july17-${i + 1}-${Date.now()}`);
+    const imageAssetId = await uploadImage(`nepal-news-jul22-${i + 1}-${timestamp}`);
     
     const slugCurrent = story.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)+/g, '') + `-${Date.now()}`;
+      .replace(/(^-|-$)+/g, '') + `-${timestamp}-${i}`;
 
     const doc = {
       _type: 'article',
       title: story.title,
       slug: { _type: 'slug', current: slugCurrent },
       category: story.category,
-      author: 'SurkhetTimes News Desk',
-      date: '2026-07-17',
+      author: story.author,
+      date: story.date,
       facts: story.facts,
       fullStory: story.fullStory,
       hasVideo: false,

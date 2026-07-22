@@ -40,6 +40,13 @@ export const article = defineType({
       name: 'author',
       title: 'Author',
       type: 'string',
+      description: 'Legacy field. Please use Author Profile going forward.',
+    }),
+    defineField({
+      name: 'authorProfile',
+      title: 'Author Profile',
+      type: 'reference',
+      to: [{ type: 'author' }],
     }),
     defineField({
       name: 'date',

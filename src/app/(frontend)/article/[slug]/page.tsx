@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import FactsToggle from "@/components/FactsToggle/FactsToggle";
 import AudioVideoPlayer from "@/components/AudioVideoPlayer/AudioVideoPlayer";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
@@ -64,9 +65,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     (a: any) => a._id !== article._id
   ).slice(0, 3);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://surkhettimes.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://surkhettimes.vercel.app'));
   
-  const jsonLd = {
+  const authorName = article.authorProfile?.name || article.author || 'SurkhetTimes Desk';
+  
+  const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": article.title,
@@ -75,7 +78,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     "dateModified": article.date,
     "author": [{
       "@type": "Person",
-      "name": article.author || 'SurkhetTimes Desk',
+      "name": authorName,
       "url": baseUrl
     }],
     "publisher": {
@@ -88,11 +91,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     }
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "गृहपृष्ठ", "item": baseUrl },
+      { "@type": "ListItem", "position": 2, "name": article.category || 'News', "item": `${baseUrl}/category/${article.category ? article.category.toLowerCase() : 'news'}` },
+      { "@type": "ListItem", "position": 3, "name": article.title, "item": `${baseUrl}/article/${article.slug}` }
+    ]
+  };
+
   return (
     <div className={styles.articlePage}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([articleJsonLd, breadcrumbJsonLd]) }}
       />
       <div className={`container ${styles.articleLayout}`}>
         {/* Main Content */}
@@ -116,10 +129,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className={styles.articleMeta}>
             <div className={styles.authorInfo}>
               <div className={styles.authorAvatar}>
-                {article.author?.charAt(0) || 'ST'}
+                {article.authorProfile?.image ? (
+                  <Image src={urlFor(article.authorProfile.image).width(40).height(40).url()} alt={authorName} width={40} height={40} style={{borderRadius: '50%'}} />
+                ) : authorName.charAt(0)}
               </div>
               <div>
-                <span className={styles.authorName}>{article.author || 'SurkhetTimes'}</span>
+                <span className={styles.authorName}>{authorName}</span>
                 <span className={styles.publishDate}>{article.date}</span>
               </div>
             </div>
@@ -139,7 +154,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Hero Image */}
           <div className={styles.articleImage}>
             {article.coverImage ? (
-              <img src={urlFor(article.coverImage).width(1200).height(800).url()} alt={article.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <Image 
+                src={urlFor(article.coverImage).width(1200).height(800).url()} 
+                alt={article.title} 
+                width={1200}
+                height={800}
+                priority
+                style={{ width: '100%', height: 'auto', display: 'block' }} 
+              />
             ) : (
               <div className={styles.imagePlaceholder}>
                 <span>📰</span>
