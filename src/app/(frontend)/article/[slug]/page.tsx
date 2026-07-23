@@ -193,7 +193,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className={styles.correctionsNotice}>
             <p>
               📝 यो कथामा कुनै त्रुटि भेट्टाउनुभयो? हामीलाई{" "}
-              <a href="mailto:info@surkhettimes.com">जानकारी दिनुहोस्</a>।
+              <a href="mailto:surkhettimes05@gmail.com">जानकारी दिनुहोस्</a>।
             </p>
           </div>
         </article>

@@ -12,25 +12,18 @@ const client = createClient({
 
 const articles = [
   {
-    title: "Nepal Protests Saudi Arabia's New Skill Test for Migrant Workers",
-    slug: "nepal-protests-saudi-skill-test-july23-2026",
-    content: "Nepal is officially protesting a unilateral move by Saudi Arabia to mandate a new 'skill certification programme' for migrant workers. The requirement imposes additional costs on workers and has prompted the Nepali government to issue a diplomatic note requesting an immediate review of the policy.",
+    title: "Bagmati Province Coalition Collapses",
+    slug: "bagmati-coalition-collapse-july23-2026",
+    content: "The governing coalition between the Nepali Congress (NC) and the CPN-UML in Bagmati Province has officially ended, leading to significant political shifts and uncertainty in the provincial assembly.",
     category: "Politics",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_migrant_workers_july23_1784776265279.jpg"
+    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_politics_bagmati_july23_1784787214582.jpg"
   },
   {
-    title: "Severe Monsoon Floods and Landslides Block Major Highways",
-    slug: "monsoon-floods-block-highways-july23-2026",
-    content: "Continuous heavy monsoon rains have triggered widespread flooding and landslides across several provinces in Nepal. Major transport arteries, including the Arniko Highway, BP Highway, and Kanti Lokpath, have been severely disrupted, prompting authorities to advise the public against non-essential travel.",
-    category: "National",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_monsoon_flooding_july23_1784776278456.jpg"
-  },
-  {
-    title: "Fertiliser Crisis Deepens During Peak Farming Season",
-    slug: "fertiliser-crisis-peak-season-july23-2026",
-    content: "Farmers across Nepal are grappling with a severe shortage of chemical fertilisers during the critical monsoon farming season. The ongoing scarcity has forced many farmers to rely on risky, informal procurement channels across the Indian border, threatening this year's agricultural output.",
+    title: "Government Disburses Rs507 Million for Bird Flu Compensation",
+    slug: "bird-flu-compensation-nepal-july23-2026",
+    content: "Following an outbreak that affected 162 poultry farms over the past four months, the Department of Livestock Services reported that the government has disbursed over Rs507 million in compensation to affected farmers. Fortunately, no new cases have been reported since mid-July.",
     category: "Agriculture",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_farmers_fertiliser_july23_1784776295950.jpg"
+    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_poultry_birdflu_july23_1784787232311.jpg"
   }
 ];
 

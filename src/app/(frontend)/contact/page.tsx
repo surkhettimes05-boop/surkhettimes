@@ -20,14 +20,14 @@ export default function ContactPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '3rem' }}>
           <div style={{ background: '#fff', padding: '1.5rem', border: '1px solid #ddd', borderRadius: '4px' }}>
             <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', marginBottom: '1rem' }}>Newsroom & Tips</h3>
-            <p><strong>Email:</strong> news@surkhettimes.com</p>
-            <p><strong>Phone:</strong> +977-083-XXXXXX</p>
+            <p><strong>Email:</strong> surkhettimes05@gmail.com</p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/9779822403262" style={{color: 'var(--accent-1)'}}>+977 9822403262</a></p>
           </div>
           
           <div style={{ background: '#fff', padding: '1.5rem', border: '1px solid #ddd', borderRadius: '4px' }}>
             <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', marginBottom: '1rem' }}>Advertising</h3>
-            <p><strong>Email:</strong> ads@surkhettimes.com</p>
-            <p><strong>Phone:</strong> +977-083-XXXXXX</p>
+            <p><strong>Email:</strong> surkhettimes05@gmail.com</p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/9779822403262" style={{color: 'var(--accent-1)'}}>+977 9822403262</a></p>
           </div>
         </div>
 

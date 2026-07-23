@@ -23,7 +23,9 @@ export default function Footer() {
         {/* ─── Colophon Text ─── */}
         <div className={styles.colophon}>
           प्रकाशक: SurkhetTimes Media | प्रधान कार्यालय: सुर्खेत, कर्णाली प्रदेश | सम्पर्क:{' '}
-          <a href="mailto:info@surkhettimes.com">info@surkhettimes.com</a>
+          <a href="mailto:surkhettimes05@gmail.com">surkhettimes05@gmail.com</a>
+          <span className={styles.separator} style={{margin: '0 8px'}}>|</span>
+          WhatsApp: <a href="https://wa.me/9779822403262">+977 9822403262</a>
         </div>
 
         <div className={styles.divider} />
