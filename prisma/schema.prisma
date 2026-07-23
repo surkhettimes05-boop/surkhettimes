@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Subscriber {
+  id                String       @id @default(cuid())
+  email             String       @unique
+  status            String       @default("PENDING") // PENDING, ACTIVE, INACTIVE, UNSUBSCRIBED
+  verified          Boolean      @default(false)
+  verificationToken String?      @unique
+  unsubscribeToken  String?      @unique
+  
+  // Audience Management & Profiling
+  name              String?
+  source            String?      // e.g., "Hero", "Popup", "Footer", "Article"
+  ipAddress         String?
+  userAgent         String?
+  country           String?
+  city              String?
+  engagementScore   Int          @default(0)
+  
+  // Timestamps
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  lastOpenedAt      DateTime?
+  lastClickedAt     DateTime?
+
+  // Relationships
+  preferences       SubscriberPreference[]
+  events            EngagementEvent[]
+  referrals         Referral[]
+}
+
+model Topic {
+  id          String                 @id @default(cuid())
+  name        String                 @unique // e.g., "Breaking News", "Politics", "Tech"
+  slug        String                 @unique
+  description String?
+  
+  subscribers SubscriberPreference[]
+}
+
+model SubscriberPreference {
+  id           String     @id @default(cuid())
+  subscriberId String
+  topicId      String
+  
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  topic        Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriberId, topicId])
+}
+
+model Campaign {
+  id             String    @id @default(cuid())
+  name           String    // Internal name
+  subject        String    // Email subject line
+  content        String    @db.Text // HTML or rich text content
+  status         String    @default("DRAFT") // DRAFT, SCHEDULED, SENDING, SENT, FAILED
+  type           String    @default("NEWSLETTER") // NEWSLETTER, ALERT, AUTOMATION
+  
+  sentAt         DateTime?
+  scheduledFor   DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Analytics
+  totalSent      Int       @default(0)
+  totalOpens     Int       @default(0)
+  totalClicks    Int       @default(0)
+  totalBounces   Int       @default(0)
+  
+  events         EngagementEvent[]
+  archive        NewsletterArchive?
+}
+
+model NewsletterArchive {
+  id         String   @id @default(cuid())
+  campaignId String   @unique
+  slug       String   @unique
+  title      String
+  excerpt    String?
+  content    String   @db.Text
+  isPublic   Boolean  @default(true)
+  
+  publishedAt DateTime @default(now())
+  
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+model EngagementEvent {
+  id           String     @id @default(cuid())
+  subscriberId String
+  campaignId   String?
+  eventType    String     // OPEN, CLICK, BOUNCE, UNSUBSCRIBE
+  linkUrl      String?    // If it's a CLICK event, what URL was clicked?
+  createdAt    DateTime   @default(now())
+  
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  campaign     Campaign?  @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+}
+
+model Referral {
+  id            String   @id @default(cuid())
+  referrerId    String
+  referredEmail String   @unique
+  status        String   @default("PENDING") // PENDING, CONVERTED
+  createdAt     DateTime @default(now())
+  
+  referrer      Subscriber @relation(fields: [referrerId], references: [id], onDelete: Cascade)
+}
