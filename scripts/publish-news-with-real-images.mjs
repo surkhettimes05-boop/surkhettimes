@@ -49,40 +49,29 @@ async function publishNews() {
     // Create post document
     // Using a typical Sanity post schema
     const post = {
-      _type: 'post',
+      _type: 'article',
       title: article.title,
       slug: {
         _type: 'slug',
         current: article.slug
       },
-      mainImage: {
+      coverImage: {
         _type: 'image',
         asset: {
           _type: 'reference',
           _ref: asset._id
         }
       },
-      // Use raw string or block text depending on schema, we'll try block text first for body
-      body: [
-        {
-          _type: 'block',
-          _key: (Math.random() + 1).toString(36).substring(7),
-          style: 'normal',
-          markDefs: [],
-          children: [
-            {
-              _type: 'span',
-              _key: (Math.random() + 1).toString(36).substring(7),
-              text: article.content,
-              marks: []
-            }
-          ]
-        }
-      ]
+      category: article.category.toLowerCase(),
+      date: new Date().toISOString(),
+      author: 'SurkhetTimes AI Desk',
+      fullStory: article.content,
+      facts: [article.content.substring(0, 50) + '...'],
+      sourceType: 'ai_draft'
     };
     
     const result = await client.create(post);
-    console.log(`Successfully created post: ${result._id}\n`);
+    console.log(`Successfully created article: ${result._id}\n`);
   }
 }
 

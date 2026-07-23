@@ -11,8 +11,7 @@ export default async function HomePage() {
   let ads: any[] = [];
   try {
     const allArticles = await client.fetch(articlesQuery);
-    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(new Date());
-    articles = allArticles.filter((a: any) => a.date === today);
+    articles = allArticles;
     ads = await client.fetch(advertisementsQuery);
   } catch (error) {
     console.warn("Could not fetch Sanity data for HomePage.");
