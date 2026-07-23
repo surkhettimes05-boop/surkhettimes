@@ -73,13 +73,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     "headline": article.title,
-    "image": article.coverImage ? [urlFor(article.coverImage).width(1200).height(800).url()] : [],
+    "image": article.coverImage ? [
+      urlFor(article.coverImage).width(1200).height(1200).url(), // 1x1
+      urlFor(article.coverImage).width(1200).height(900).url(),  // 4x3
+      urlFor(article.coverImage).width(1200).height(675).url()   // 16x9
+    ] : [],
     "datePublished": article.date,
     "dateModified": article.date,
     "author": [{
       "@type": "Person",
       "name": authorName,
-      "url": baseUrl
+      "url": `${baseUrl}/author/${encodeURIComponent(authorName.toLowerCase().replace(/\\s+/g, '-'))}`
     }],
     "publisher": {
       "@type": "NewsMediaOrganization",
@@ -88,7 +92,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         "@type": "ImageObject",
         "url": `${baseUrl}/favicon.ico`
       }
-    }
+    },
+    "isAccessibleForFree": true
   };
 
   const breadcrumbJsonLd = {

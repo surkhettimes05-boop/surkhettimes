@@ -12,25 +12,25 @@ const client = createClient({
 
 const articles = [
   {
-    title: "Government Introduces Sweeping Aviation Incentives at Key Airports",
-    slug: "aviation-incentives-pokhara-bhairahawa-2026",
-    content: "To boost tourism and air traffic, the Nepal cabinet has approved a 100% waiver on landing, parking, and navigation charges, along with a 50% discount on ground handling fees for international flights at Pokhara and Gautam Buddha international airports, effective until mid-September 2028. This move aims to increase international arrivals and support the struggling domestic aviation sector.",
-    category: "Economy",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\pokhara_airport_incentives_1784736470897.jpg"
-  },
-  {
-    title: "Tourism Bill Controversy: Hoteliers Push Back on Price Regulations",
-    slug: "tourism-bill-controversy-hotel-rates-2026",
-    content: "Lawmakers are currently debating amendments to the Integrated Tourism Bill. Among the most controversial proposals is a measure that would allow the government to regulate hotel room rates. Hoteliers have strongly criticized the move as 'regressive', arguing that room rates should be determined by market demand rather than government intervention.",
-    category: "Business",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_hotel_tourism_1784736496049.jpg"
-  },
-  {
-    title: "Prime Minister Backs New Handicrafts Development Board",
-    slug: "pm-backs-handicrafts-development-board-2026",
-    content: "Prime Minister Balendra Shah has affirmed the government's strong commitment to Nepal's handicraft sector. He recently expressed support for the establishment of a Handicrafts Development Board and proposed the creation of a 'handicrafts village' to promote traditional artisanal skills and boost the export of local goods.",
+    title: "Nepal Protests Saudi Arabia's New Skill Test for Migrant Workers",
+    slug: "nepal-protests-saudi-skill-test-july23-2026",
+    content: "Nepal is officially protesting a unilateral move by Saudi Arabia to mandate a new 'skill certification programme' for migrant workers. The requirement imposes additional costs on workers and has prompted the Nepali government to issue a diplomatic note requesting an immediate review of the policy.",
     category: "Politics",
-    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_handicraft_artisan_1784736514300.jpg"
+    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_migrant_workers_july23_1784776265279.jpg"
+  },
+  {
+    title: "Severe Monsoon Floods and Landslides Block Major Highways",
+    slug: "monsoon-floods-block-highways-july23-2026",
+    content: "Continuous heavy monsoon rains have triggered widespread flooding and landslides across several provinces in Nepal. Major transport arteries, including the Arniko Highway, BP Highway, and Kanti Lokpath, have been severely disrupted, prompting authorities to advise the public against non-essential travel.",
+    category: "National",
+    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_monsoon_flooding_july23_1784776278456.jpg"
+  },
+  {
+    title: "Fertiliser Crisis Deepens During Peak Farming Season",
+    slug: "fertiliser-crisis-peak-season-july23-2026",
+    content: "Farmers across Nepal are grappling with a severe shortage of chemical fertilisers during the critical monsoon farming season. The ongoing scarcity has forced many farmers to rely on risky, informal procurement channels across the Indian border, threatening this year's agricultural output.",
+    category: "Agriculture",
+    imagePath: "C:\\Users\\QCS\\.gemini\\antigravity\\brain\\915e19c0-3e16-4e8d-b9c6-8a903eb7757b\\nepal_farmers_fertiliser_july23_1784776295950.jpg"
   }
 ];
 
@@ -47,31 +47,40 @@ async function publishNews() {
     console.log(`Image uploaded: ${asset._id}`);
     
     // Create post document
-    // Using a typical Sanity post schema
     const post = {
-      _type: 'article',
+      _type: 'post',
       title: article.title,
       slug: {
         _type: 'slug',
         current: article.slug
       },
-      coverImage: {
+      mainImage: {
         _type: 'image',
         asset: {
           _type: 'reference',
           _ref: asset._id
         }
       },
-      category: article.category.toLowerCase(),
-      date: new Date().toISOString(),
-      author: 'SurkhetTimes AI Desk',
-      fullStory: article.content,
-      facts: [article.content.substring(0, 50) + '...'],
-      sourceType: 'ai_draft'
+      body: [
+        {
+          _type: 'block',
+          _key: (Math.random() + 1).toString(36).substring(7),
+          style: 'normal',
+          markDefs: [],
+          children: [
+            {
+              _type: 'span',
+              _key: (Math.random() + 1).toString(36).substring(7),
+              text: article.content,
+              marks: []
+            }
+          ]
+        }
+      ]
     };
     
     const result = await client.create(post);
-    console.log(`Successfully created article: ${result._id}\n`);
+    console.log(`Successfully created post: ${result._id}\n`);
   }
 }
 
